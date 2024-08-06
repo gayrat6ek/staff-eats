@@ -17,7 +17,6 @@ from fastapi import (
     Request,
     status,
 )
-import pandas as pd
 from pydantic import ValidationError
 from fastapi.security import OAuth2PasswordBearer
 import xml.etree.ElementTree as ET
