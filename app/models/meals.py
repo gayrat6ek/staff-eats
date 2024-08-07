@@ -19,7 +19,6 @@ class Meals(Base):
     group_id = Column(Integer, ForeignKey("groups.id"))
     group = relationship("Groups", back_populates="meal")
     is_active = Column(Integer, default=1)
-    orderitem = relationship("Orderitems", back_populates="meal")
     rating = relationship("Ratings", back_populates="meal")
     menu = relationship("Menus", back_populates="meal")
     created_at = Column(DateTime(timezone=True), default=func.now())

@@ -5,17 +5,19 @@ import bcrypt
 import pytz
 from sqlalchemy.sql import func
 from datetime import datetime,timedelta
-from sqlalchemy import or_, and_, Date, cast
+from sqlalchemy import or_, and_, Date, cast,String
 from uuid import UUID
 
 from app.schemas.clients import ClientsGet,ClientsCreate,ClientsUpdate
 from app.models.clients import  Clients
 
 
-def get_clients(db:Session,id:Optional[int]=None):
+def get_clients(db:Session,id:Optional[int]=None,telegram_id:Optional[str]=None):
     query = db.query(Clients).filter(Clients.is_active == 1)
     if id is not None:
         query = query.filter(Clients.id == id)
+    if telegram_id is not None:
+        query = query.filter(Clients.telegram_id == cast(telegram_id, String))
     return query.all()
 
 

@@ -32,10 +32,11 @@ client_router = APIRouter()
 )
 async def get_clients(
     id: Optional[int] = None,
+    telegram_id: Optional[int] = None,
     db: Session = Depends(get_db),
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
-    clients = client_crud.get_clients(db=db, id=id)
+    clients = client_crud.get_clients(db=db, id=id, telegram_id=telegram_id)
     return paginate(clients)
 
 

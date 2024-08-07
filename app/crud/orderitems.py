@@ -11,10 +11,10 @@ from uuid import UUID
 from app.models.orderitems import Orderitems
 
 
-def create_orderitems(db:Session,order_id,meal_id,amount):
+def create_orderitems(db:Session,order_id,group_id,amount):
     query = Orderitems(
         order_id=order_id,
-        meal_id=meal_id,
+        group_id=group_id,
         amount=amount
     )
     db.add(query)

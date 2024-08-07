@@ -35,10 +35,11 @@ department_router = APIRouter()
 async def get_departments(
     id: Optional[int] = None,
     company_id: Optional[int] = None,
+    password: Optional[str] = None,
     db: Session = Depends(get_db),
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
-    departments = department_crud.get_departments(db=db,id=id,company_id=company_id)
+    departments = department_crud.get_departments(db=db,id=id,company_id=company_id,password=password)
     return paginate(departments)
 
 

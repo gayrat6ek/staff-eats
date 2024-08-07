@@ -17,5 +17,6 @@ class Groups(Base):
     description = Column(String, nullable=True)
     is_active = Column(Integer, default=1)
     meal = relationship("Meals", back_populates="group")
+    orderitem = relationship("Orderitems", back_populates="group")
     created_at = Column(DateTime(timezone=True), default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())

@@ -45,7 +45,7 @@ async def create_order(
 ):
     query = order_crud.create_order(db=db, form_data=form_data)
     for i in form_data.orderitems:
-        orderitem_crud.create_orderitems(db=db,order_id=query.id,meal_id=i['meal_id'],amount=i['amount'])
+        orderitem_crud.create_orderitems(db=db,order_id=query.id,group_id=i['group_id'],amount=i['amount'])
     return query
 
 

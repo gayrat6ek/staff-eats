@@ -35,3 +35,12 @@ class GroupsGet(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+
+class GroupNameGet(BaseModel):
+    id: int
+    name: Optional[str] = None
+
+    class Config:
+        orm_mode = True

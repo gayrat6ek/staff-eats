@@ -40,10 +40,12 @@ def update_department(db:Session,form_data:DepartmentsUpdate):
     return query
 
 
-def get_departments(db:Session,id:Optional[int]=None,company_id:Optional[int]=None):
+def get_departments(db:Session,id:Optional[int]=None,company_id:Optional[int]=None,password:Optional[str]=None):
     query = db.query(Departments).filter(Departments.is_active == 1)
     if id is not None:
         query = query.filter(Departments.id == id)
     if company_id is not None:
         query = query.filter(Departments.company_id == company_id)
+    if password is not None:
+        query = query.filter(Departments.password == password)
     return query.all()
