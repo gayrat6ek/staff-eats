@@ -41,7 +41,7 @@ def update_department(db:Session,form_data:DepartmentsUpdate):
 
 
 def get_departments(db:Session,id:Optional[int]=None,company_id:Optional[int]=None,password:Optional[str]=None):
-    query = db.query(Departments).filter(Departments.is_active == 1)
+    query = db.query(Departments)
     if id is not None:
         query = query.filter(Departments.id == id)
     if company_id is not None:

@@ -41,7 +41,7 @@ def update_meals(db:Session,form_data:UpdateMeals):
 
 
 def get_meals(db:Session,id:Optional[int]=None,group_id:Optional[int]=None):
-    query = db.query(Meals).filter(Meals.is_active == 1)
+    query = db.query(Meals)
     if id is not None:
         query = query.filter(Meals.id == id)
     if group_id is not None:

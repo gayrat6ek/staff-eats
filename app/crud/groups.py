@@ -39,7 +39,7 @@ def update_group(db:Session,form_data:GroupsUpdate):
 
 
 def get_groups(db:Session,id:Optional[int]=None):
-    query = db.query(Groups).filter(Groups.is_active == 1)
+    query = db.query(Groups)
     if id is not None:
         query = query.filter(Groups.id == id)
     return query.all()
