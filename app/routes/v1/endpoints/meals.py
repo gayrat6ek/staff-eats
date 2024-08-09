@@ -64,3 +64,15 @@ async def update_meal(
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
     return meal_crud.update_meals(db=db, form_data=form_data)
+
+
+@meal_router.get(
+    "/meals/{id}",
+    response_model=meal_sch.GetMeals,
+)
+async  def get_one_meal(
+    id:int,
+    db: Session = Depends(get_db),
+    current_user: user_sch.UserGet = Depends(get_current_user),
+):
+    return meal_crud.get_one_meal(db=db,id=id)

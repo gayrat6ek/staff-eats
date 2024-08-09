@@ -49,3 +49,8 @@ def get_departments(db:Session,id:Optional[int]=None,company_id:Optional[int]=No
     if password is not None:
         query = query.filter(Departments.password == password)
     return query.all()
+
+
+def get_one_department(db:Session,id:int):
+    query = db.query(Departments).filter(Departments.id==id).first()
+    return query

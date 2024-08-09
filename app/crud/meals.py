@@ -47,3 +47,10 @@ def get_meals(db:Session,id:Optional[int]=None,group_id:Optional[int]=None):
     if group_id is not None:
         query = query.filter(Meals.group_id == group_id)
     return query.all()
+
+
+
+def get_one_meal(db:Session,id):
+    query = db.query(Meals).filter(Meals.id==id).first()
+    return query
+

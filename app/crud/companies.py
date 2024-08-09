@@ -12,7 +12,7 @@ from app.schemas.companies import CompaniesGet,CompaniesCreate,CompaniesUpdate
 
 
 def get_companies(db:Session,name:Optional[int]=None,id:Optional[int]=None):
-    query = db.query(Companies).filter(Companies.is_active == 1)
+    query = db.query(Companies)
     if id is not None:
         query = query.filter(Companies.name.ilike(f"%{name}%"))
     return query.all()
@@ -43,4 +43,9 @@ def update_company(db:Session,form_data:CompaniesUpdate):
     db.commit()
     return query
 
+
+
+def get_one_company(db:Session,id):
+    query = db.query(Companies).filter(Companies.id==id).first()
+    return query
 

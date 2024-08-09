@@ -70,5 +70,11 @@ async def update_department(
 
 
 
+@department_router.get("/departments/{id}",response_model=department_sch.DepartmentsGet)
+def get_one_department(id:int,
+                    db:Session = Depends(get_db),
+                    current_user:user_sch.UserGet = Depends(get_current_user)):
+    return  department_crud.get_one_department(db=db,id=id)
+
 
 

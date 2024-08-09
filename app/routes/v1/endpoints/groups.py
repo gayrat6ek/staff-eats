@@ -65,3 +65,15 @@ async def update_group(
 ):
     return group_crud.update_group(db=db, form_data=form_data)
 
+
+@group_router.get(
+    "/group/{id}",
+    response_model=group_sch.GroupsGet,
+)
+async def get_one_group(
+    id: int,
+    db: Session = Depends(get_db),
+    current_user: user_sch.UserGet = Depends(get_current_user),
+):
+    return group_crud.get_one_group(db=db, id=id)
+

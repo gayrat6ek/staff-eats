@@ -48,6 +48,12 @@ def update_company(form_data:companies_sch.CompaniesUpdate,
 
     return companies_crud.update_company(db,form_data)
 
+@company_router.get("/company/{id}",response_model=companies_sch.CompaniesGet)
+def get_one_company(id:int,
+                    db:Session = Depends(get_db),
+                    current_user:user_sch.UserGet = Depends(get_current_user)):
+    return  companies_crud.get_one_company(db=db,id=id)
+
 
 
 

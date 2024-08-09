@@ -43,3 +43,8 @@ def get_groups(db:Session,id:Optional[int]=None):
     if id is not None:
         query = query.filter(Groups.id == id)
     return query.all()
+
+
+def get_one_group(db:Session,id:int):
+    query = db.query(Groups).filter(Groups.id==id).first()
+    return query
