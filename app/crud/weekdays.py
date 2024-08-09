@@ -46,8 +46,13 @@ def get_weekdays(db:Session,id:Optional[int]=None):
 
 
 def get_menus(db:Session,id:int):
-    query = db.query(Weekdays).filter(Weekdays.is_active == 1)
+    query = db.query(Weekdays)
     if id is not None:
         query = query.filter(Weekdays.id == id)
     return query.all()
+
+
+def get_one_weekday(db:Session,id:int):
+    query = db.query(Weekdays).filter(Weekdays.id==id).first()
+    return query
 

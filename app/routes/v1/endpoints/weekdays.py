@@ -69,7 +69,7 @@ async def update_weekdays(
     return weekday_crud.update_weekday(db=db, form_data=form_data)
 
 
-@weekday_router.get("/menus", response_model=Page[weekday_sch.WeekdaysMenu])
+@weekday_router.get("/menus",tags=['Menus'], response_model=Page[weekday_sch.WeekdaysMenu])
 async def get_weekdays_menus(
     id: Optional[int] = None,
     db: Session = Depends(get_db),
@@ -77,6 +77,29 @@ async def get_weekdays_menus(
 ):
     weekdays = weekday_crud.get_menus(db=db,id=id)
     return paginate(weekdays)
+
+
+@weekday_router.get('/menus/{id}',tags=['Menus'], response_model=weekday_sch.WeekdaysMenu)
+async def get_one_menu(
+    id: int,
+    db: Session = Depends(get_db),
+    current_user: user_sch.UserGet = Depends(get_current_user),
+):
+    return weekday_crud.get_menus(db=db, id=id)
+
+
+@weekday_router.get(
+    "/weekdays/{id}",
+    response_model=weekday_sch.WeekdaysGet,
+)
+async def get_one_weekday(
+    id:int,
+    db: Session = Depends(get_db),
+    current_user: user_sch.UserGet = Depends(get_current_user),
+):
+    return weekday_crud.get_one_weekday(db=db,id=id)
+
+
 
 
 

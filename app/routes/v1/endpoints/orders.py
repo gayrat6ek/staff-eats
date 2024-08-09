@@ -38,6 +38,16 @@ async def read_orders(
     return paginate(query)
 
 
+@order_router.get("/orders/{id}", response_model=order_sch.OrdersGet)
+async def read_order(
+    id: int,
+    db: Session = Depends(get_db),
+    current_user: user_sch.UserGet = Depends(get_current_user),
+):
+    query = order_crud.get_one_order(db=db, id=id)
+    return query
+
+
 @order_router.post("/orders", response_model=order_sch.OrdersGet)
 async def create_order(
     form_data: order_sch.OrderCreate,
@@ -47,6 +57,8 @@ async def create_order(
     for i in form_data.orderitems:
         orderitem_crud.create_orderitems(db=db,order_id=query.id,group_id=i['group_id'],amount=i['amount'])
     return query
+
+
 
 
 

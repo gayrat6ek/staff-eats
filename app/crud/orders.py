@@ -37,3 +37,8 @@ def get_orders(db:Session,id:Optional[int]=None,order_date:Optional[date]=None,c
     return query.all()
 
 
+def get_one_order(db:Session,id):
+    query = db.query(Orders).filter(Orders.id==id).first()
+    return query
+
+
