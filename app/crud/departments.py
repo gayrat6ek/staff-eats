@@ -29,14 +29,13 @@ def update_department(db:Session,form_data:DepartmentsUpdate):
             query.name = form_data.name
         if form_data.description:
             query.description = form_data.description
-        if form_data.company_id:
-            query.company_id = form_data.company_id
         if form_data.is_active:
             query.is_active = form_data.is_active
         if form_data.password:
             query.password = form_data.password
 
     db.commit()
+    db.refresh(query)
     return query
 
 

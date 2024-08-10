@@ -35,6 +35,7 @@ def update_weekday(db:Session,form_data:WeekdaysUpdate):
             query.is_active = form_data.is_active
 
     db.commit()
+    db.refresh(query)
     return query
 
 

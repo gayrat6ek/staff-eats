@@ -35,6 +35,7 @@ def update_group(db:Session,form_data:GroupsUpdate):
             query.is_active = form_data.is_active
 
     db.commit()
+    db.refresh(query)
     return query
 
 

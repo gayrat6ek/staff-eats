@@ -41,6 +41,7 @@ def update_company(db:Session,form_data:CompaniesUpdate):
         if form_data.is_active:
             query.is_active = form_data.is_active
     db.commit()
+    db.refresh(query)
     return query
 
 
