@@ -35,5 +35,6 @@ class DepartmentsGet(BaseModel):
     description: Optional[str]=None
     company_id: Optional[int]=None
     password: Optional[str]=None
+    is_active : Optional[int]=None
     class Config:
         orm_mode = True
