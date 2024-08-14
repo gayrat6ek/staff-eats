@@ -4,7 +4,7 @@ from typing import Optional, Annotated, Dict
 from datetime import datetime, time
 from fastapi import Form
 from uuid import UUID
-from .departments import DepartmentsGet
+from .departments import DepartmentsGetAll
 
 
 
@@ -15,7 +15,7 @@ class ClientsGet(BaseModel):
     telegram_id:Optional[str] = None
     is_active:Optional[bool] = None
     department_id:Optional[int] = None
-    department : Optional[DepartmentsGet] = None
+    department : Optional[DepartmentsGetAll] = None
     class Config:
         orm_mode = True
 

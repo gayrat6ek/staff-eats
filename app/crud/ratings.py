@@ -23,3 +23,15 @@ def create_ratings(db:Session,form_data:RatingsCreate):
     db.refresh(query)
     return query
 
+
+
+def get_rankings(db:Session,from_date, to_date,id:Optional[int]=None):
+    query = db.query(Ratings)
+    if id is not None:
+        query = query.filter(Ratings.id == id)
+    if from_date is not None:
+        query = query.filter(Ratings.created_at >= from_date)
+    if to_date is not None:
+        query = query.filter(Ratings.created_at <= to_date)
+    return query.all()
+

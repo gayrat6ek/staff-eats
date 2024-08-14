@@ -31,5 +31,6 @@ class Ratings(Base):
     meal = relationship("Meals", back_populates="rating")
     client_id = Column(Integer, ForeignKey("clients.id"))
     client = relationship("Clients", back_populates="rating")
+    comment = Column(String, nullable=True)
     created_at = Column(DateTime(timezone=True), default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
