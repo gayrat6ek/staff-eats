@@ -12,6 +12,7 @@ class WeekdaysCreate(BaseModel):
     description: Optional[str]=None
     is_active: Optional[int]=None
     file: Optional[str]=None
+    meals: Optional[list[int]]=None
     class Config:
         orm_mode = True
 
@@ -20,6 +21,7 @@ class WeekdaysUpdate(BaseModel):
     description: Optional[str]=None
     is_active: Optional[int]=None
     file : Optional[str]=None
+    meals: Optional[list[int]]=None
     id:int
     class Config:
         orm_mode = True

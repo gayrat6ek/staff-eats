@@ -21,6 +21,7 @@ from app.schemas import users as user_sch
 from app.schemas import weekdays as weekday_sch
 from app.crud import weekdays as weekday_crud
 from app.crud import files as file_crud
+from app.crud import menus as menu_crud
 
 
 weekday_router = APIRouter()
@@ -53,6 +54,15 @@ async def create_weekdays(
     if form_data.file is not None:
         file_crud.create_file(db=db,url=form_data.file,weekday_id=query.id)
 
+    if form_data.meals is not None:
+        menu_crud.delete_menu_byweekday(db=db,id=query.id)
+
+        for i in form_data.meals:
+            menu_crud.create_menus_from_weekday(db=db,weekday_id=query.id,meal_id=i)
+
+
+
+
     return query
 
 
@@ -66,6 +76,11 @@ async def update_weekdays(
     db: Session = Depends(get_db),
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
+    if form_data.meals is not None:
+        menu_crud.delete_menu_byweekday(db=db,id=form_data.id)
+
+        for i in form_data.meals:
+            menu_crud.create_menus_from_weekday(db=db,weekday_id=form_data.id,meal_id=i)
     return weekday_crud.update_weekday(db=db, form_data=form_data)
 
 

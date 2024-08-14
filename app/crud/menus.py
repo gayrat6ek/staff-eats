@@ -37,3 +37,23 @@ def delete_menus(db:Session,id:int):
     db.commit()
     return query
 
+
+def delete_menu_byweekday(db:Session,id:int):
+    query = db.query(Menus).filter(Menus.weekday_id == id).all()
+    if query:
+        for i in query:
+            db.delete(i)
+        db.commit()
+    return query
+
+
+def create_menus_from_weekday(db:Session,weekday_id:int,meal_id:int):
+    query = Menus(
+        meal_id=meal_id,
+        weekday_id=weekday_id,
+        is_active=1
+    )
+    db.add(query)
+    db.commit()
+    db.refresh(query)
+    return query
