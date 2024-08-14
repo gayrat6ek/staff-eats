@@ -28,7 +28,6 @@ meal_router = APIRouter()
 @meal_router.get(
     "/meals",
     response_model=Page[meal_sch.GetMeals],
-    response_model_exclude_none=True,
 )
 async def get_meals(
     id: Optional[int] = None,
@@ -43,7 +42,6 @@ async def get_meals(
 @meal_router.post(
     "/meals",
     response_model=meal_sch.GetMeals,
-    response_model_exclude_none=True,
 )
 async def create_meal(
     form_data: meal_sch.CreateMeals,
@@ -56,7 +54,6 @@ async def create_meal(
 @meal_router.put(
     "/meals",
     response_model=meal_sch.GetMeals,
-    response_model_exclude_none=True,
 )
 async def update_meal(
     form_data: meal_sch.UpdateMeals,

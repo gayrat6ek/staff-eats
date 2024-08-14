@@ -28,7 +28,6 @@ client_router = APIRouter()
 @client_router.get(
     "/clients",
     response_model=Page[client_sch.ClientsGet],
-    response_model_exclude_none=True,
 )
 async def get_clients(
     id: Optional[int] = None,
@@ -43,7 +42,6 @@ async def get_clients(
 @client_router.post(
     "/clients",
     response_model=client_sch.ClientsGet,
-    response_model_exclude_none=True,
 )
 async def create_client(
     form_data: client_sch.ClientsCreate,
@@ -56,7 +54,6 @@ async def create_client(
 @client_router.put(
     "/clients",
     response_model=client_sch.ClientsGet,
-    response_model_exclude_none=True,
 )
 async def update_client(
     form_data: client_sch.ClientsUpdate,

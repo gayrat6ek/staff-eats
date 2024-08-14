@@ -28,7 +28,6 @@ menu_router = APIRouter()
 @menu_router.post(
     "/menus",
     response_model=menu_sch.MenusGet,
-    response_model_exclude_none=True,
 )
 async def create_menu(
     form_data: menu_sch.MenusCreate,

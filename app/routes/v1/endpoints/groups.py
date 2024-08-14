@@ -29,7 +29,6 @@ group_router = APIRouter()
 @group_router.get(
     "/groups",
     response_model=Page[group_sch.GroupsGet],
-    response_model_exclude_none=True,
 )
 async def get_groups(
     id: Optional[int] = None,
@@ -43,7 +42,6 @@ async def get_groups(
 @group_router.post(
     "/groups",
     response_model=group_sch.GroupsGet,
-    response_model_exclude_none=True,
 )
 async def create_group(
     form_data: group_sch.GroupsCreate,
@@ -56,7 +54,6 @@ async def create_group(
 @group_router.put(
     "/groups",
     response_model=group_sch.GroupsGet,
-    response_model_exclude_none=True,
 )
 async def update_group(
     form_data: group_sch.GroupsUpdate,

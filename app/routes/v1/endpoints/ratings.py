@@ -25,7 +25,7 @@ rating_router = APIRouter()
 
 
 
-@rating_router.post("/ratings", response_model=rating_sch.RatingsGet, response_model_exclude_none=True)
+@rating_router.post("/ratings", response_model=rating_sch.RatingsGet)
 async def create_rating(
     form_data: rating_sch.RatingsCreate,
     db: Session = Depends(get_db),
@@ -38,7 +38,6 @@ async def create_rating(
 @rating_router.get(
     "/ratings",
     response_model=Page[rating_sch.RatingsGet],
-    response_model_exclude_none=True,
 )
 async def get_ratings(
     from_date: Optional[date] = None,

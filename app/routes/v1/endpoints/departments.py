@@ -30,7 +30,6 @@ department_router = APIRouter()
 @department_router.get(
     "/departments",
     response_model=Page[department_sch.DepartmentsGet],
-    response_model_exclude_none=True,
 )
 async def get_departments(
     id: Optional[int] = None,
@@ -46,7 +45,6 @@ async def get_departments(
 @department_router.post(
     "/departments",
     response_model=department_sch.DepartmentsGet,
-    response_model_exclude_none=True,
 )
 async def create_department(
     form_data: department_sch.DepartmentsCreate,
@@ -59,7 +57,6 @@ async def create_department(
 @department_router.put(
     "/departments",
     response_model=department_sch.DepartmentsGet,
-    response_model_exclude_none=True,
 )
 async def update_department(
     form_data: department_sch.DepartmentsUpdate,
