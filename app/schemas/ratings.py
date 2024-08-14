@@ -19,11 +19,11 @@ class RatingsCreate(BaseModel):
 
 class RatingsGet(BaseModel):
     rating: Optional[int] = None
+    comment: Optional[str] = None
     meal_id: int
     meal: Optional[GetMeals] = None
     client_id: int
     client: Optional[ClientsGet] = None
-    comment: Optional[str] = None
     class Config:
         orm_mode = True
 
