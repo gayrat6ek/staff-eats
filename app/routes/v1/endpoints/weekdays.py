@@ -29,7 +29,7 @@ weekday_router = APIRouter()
 
 @weekday_router.get(
     "/weekdays",
-    response_model=Page[weekday_sch.WeekdaysGet],
+    response_model=Page[weekday_sch.WeekdaysMenu],
 )
 async def get_weekdays(
     id: Optional[int] = None,
@@ -41,7 +41,7 @@ async def get_weekdays(
 
 @weekday_router.post(
     "/weekdays",
-    response_model=weekday_sch.WeekdaysGet,
+    response_model=weekday_sch.WeekdaysMenu,
 )
 async def create_weekdays(
     form_data: weekday_sch.WeekdaysCreate,
@@ -66,7 +66,7 @@ async def create_weekdays(
 
 @weekday_router.put(
     "/weekdays",
-    response_model=weekday_sch.WeekdaysGet,
+    response_model=weekday_sch.WeekdaysMenu,
 )
 async def update_weekdays(
     form_data: weekday_sch.WeekdaysUpdate,
