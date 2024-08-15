@@ -16,7 +16,7 @@ from fastapi import (
     Request,
     status,
 )
-from app.routes.depth import get_db, get_current_user,format_top5meal,format_meals_groups,format_meals_company
+from app.routes.depth import get_db, get_current_user,format_top5meal,format_meals_groups,format_meals_company,generate_excel_from_statistics
 from app.schemas import users as user_sch
 from app.crud import statistics as statistics_crud
 
@@ -55,6 +55,22 @@ async def get_statistics(
 
 
     return statistics_crud.get_meal_ratings_statistics(db=db,from_date=from_date,to_date=to_date)
+
+@statistics_router.get('/statistics/meal/average/excell', status_code=status.HTTP_200_OK,tags=["excell"])
+async def get_statistics_excell(
+        from_date: Optional[date] = None,
+        to_date: Optional[date] = None,
+    db: Session = Depends(get_db),
+    current_user: user_sch.UserGet = Depends(get_current_user),
+):
+    statistics = statistics_crud.get_meal_ratings_statistics(db=db,from_date=from_date,to_date=to_date)
+    generate_excell_file = generate_excel_from_statistics(statistics,file_path='files/statisticsmeals.xlsx')
+    return {'file_path':generate_excell_file}
+
+
+
+
+
 
 
 

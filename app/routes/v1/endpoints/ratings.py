@@ -16,7 +16,7 @@ from fastapi import (
     Request,
     status,
 )
-from app.routes.depth import get_db, get_current_user
+from app.routes.depth import get_db, get_current_user,generate_excell_list_of_ratings
 from app.schemas import users as user_sch
 from app.schemas import ratings as rating_sch
 from app.crud import ratings as rating_crud
@@ -47,11 +47,26 @@ async def get_ratings(
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
     ratings = rating_crud.get_rankings(db=db, from_date=from_date, to_date=to_date, id=id)
+
     return paginate(ratings)
 
 
 
 
+@rating_router.get(
+    "/ratings/excell",
+    tags=["excell"]
+)
+async def get_ratings_excell(
+    from_date: Optional[date] = None,
+    to_date: Optional[date] = None,
+    id: Optional[int] = None,
+    db: Session = Depends(get_db),
+    current_user: user_sch.UserGet = Depends(get_current_user),
+):
+    ratings = rating_crud.get_rankings(db=db, from_date=from_date, to_date=to_date, id=id)
+    generate_excell_list_of_ratings(ratings,file_path='files/ratings.xlsx')
+    return {'file_path':'files/ratings.xlsx'}
 
 
 

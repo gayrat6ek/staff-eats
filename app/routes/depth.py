@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import pytz
 from jose import jwt
 from passlib.context import CryptContext
+from openpyxl import load_workbook
 import bcrypt
 import random
 import string
@@ -113,6 +114,55 @@ def format_meals_company(meals_company):
     for company_name, total_order_items_amount in meals_company:
         formatted_meals_company[company_name] = total_order_items_amount
     return formatted_meals_company
+
+
+from openpyxl import Workbook
+
+
+def generate_excel_from_statistics(statistics, file_path):
+    # Create a new workbook and select the active worksheet
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Meal Ratings Statistics"
+
+    # Write the headers
+    headers = ["Name", "Total Ratings", "Average Rating"]
+    ws.append(headers)
+
+    # Write the data
+    for meal_name, data in statistics.items():
+        row = [meal_name, data['total_ratings'], data['average_rating']]
+        ws.append(row)
+
+    # Save the workbook to the specified file path
+    wb.save(file_path)
+    return file_path
+
+
+def generate_excell_list_of_ratings(ratings, file_path):
+    # Create a new workbook and select the active worksheet
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Ratings"
+
+    # Write the headers
+    headers = ["Branch","Company", "Comment","Meal","Rating", "Date"]
+    ws.append(headers)
+
+    # Write the data
+
+    for rating in ratings:
+        row = [rating.client.department.name,rating.client.department.company.name, rating.comment,rating.meal.name,rating.rating, rating.created_at.strftime("%Y-%m-%d")]
+        ws.append(row)
+
+    # Save the workbook to the specified file path
+    wb.save(file_path)
+    return file_path
+
+
+
+
+
 
 
 
