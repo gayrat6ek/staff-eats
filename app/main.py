@@ -17,7 +17,7 @@ from app.routes.v1.endpoints.ratings import rating_router
 from app.routes.v1.endpoints.orders import order_router
 from app.routes.v1.endpoints.clients import client_router
 from app.routes.v1.endpoints.menus import menu_router
-
+from app.routes.v1.endpoints.statistics import statistics_router
 
 
 
@@ -39,6 +39,7 @@ app.include_router(rating_router, prefix="/api/v1", tags=["Ratings"],)
 app.include_router(order_router, prefix="/api/v1", tags=["Orders"],)
 app.include_router(client_router, prefix="/api/v1", tags=["Clients"],)
 app.include_router(menu_router, prefix="/api/v1", tags=["Menus"],)
+app.include_router(statistics_router, prefix="/api/v1", tags=["Statistics"],)
 
 Base.metadata.create_all(bind=engine)
 

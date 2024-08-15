@@ -91,3 +91,28 @@ async def get_current_user(
 
 
 
+def format_top5meal(statistics_top5meal):
+    formatted_meals = [
+        (meal_name, round(float(average_rating), 1))
+        for meal_name, average_rating in statistics_top5meal
+    ]
+    return formatted_meals
+
+
+def format_meals_groups(meals_groups):
+    formatted_meals_groups = {}
+    for group_name, month, total_orders in meals_groups:
+        if month not in formatted_meals_groups:
+            formatted_meals_groups[month] = {}
+        formatted_meals_groups[month][group_name] = total_orders
+    return formatted_meals_groups
+
+
+def format_meals_company(meals_company):
+    formatted_meals_company = {}
+    for company_name, total_order_items_amount in meals_company:
+        formatted_meals_company[company_name] = total_order_items_amount
+    return formatted_meals_company
+
+
+
