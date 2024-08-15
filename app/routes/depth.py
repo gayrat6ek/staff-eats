@@ -92,10 +92,10 @@ async def get_current_user(
 
 
 def format_top5meal(statistics_top5meal):
-    formatted_meals = [
-        (meal_name, round(float(average_rating), 1))
+    formatted_meals = {
+        meal_name: round(float(average_rating), 1)
         for meal_name, average_rating in statistics_top5meal
-    ]
+    }
     return formatted_meals
 
 
