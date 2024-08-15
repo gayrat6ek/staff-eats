@@ -102,7 +102,7 @@ async def get_one_menu(
 
 @weekday_router.get(
     "/weekdays/{id}",
-    response_model=weekday_sch.WeekdaysGet,
+    response_model=weekday_sch.WeekdaysMenu,
 )
 async def get_one_weekday(
     id:int,
