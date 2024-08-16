@@ -68,10 +68,11 @@ async def create_order(
 async def get_orders_excell(
     from_date: Optional[date] = None,
     to_date: Optional[date] = None,
+    order_date: Optional[date] = None,
     db: Session = Depends(get_db),
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
-    query = order_crud.get_orders(db=db,from_date=from_date,to_date=to_date)
+    query = order_crud.get_orders(db=db,from_date=from_date,to_date=to_date,order_date=order_date)
     groups = group_crud.get_groups(db=db)
     file_name = generate_excell_list_of_orders(order_list=query,file_path='files/orders.xlsx',groups=groups)
     return {'file_name':file_name}
