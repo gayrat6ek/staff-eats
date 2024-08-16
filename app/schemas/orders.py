@@ -12,6 +12,7 @@ class OrdersGet(BaseModel):
     client_id: int
     orderitem: Optional[list[OrderItemsGet]] = None
     department: Optional[DepartmentsGetAll] = None
+    created_at: Optional[datetime] = None
     class Config:
         orm_mode = True
 
