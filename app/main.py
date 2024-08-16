@@ -47,7 +47,7 @@ app.mount("/files", StaticFiles(directory="files"), name="files")
 
 
 
-origins = ["http://95.164.19.11:3000","*"]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
