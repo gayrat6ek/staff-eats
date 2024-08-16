@@ -29,12 +29,14 @@ order_router = APIRouter()
 async def read_orders(
     company_id: Optional[int] = None,
     department_id: Optional[int] = None,
+    from_date: Optional[date] = None,
+    to_date: Optional[date] = None,
     id: Optional[int] = None,
     order_date: Optional[date] = None,
     db: Session = Depends(get_db),
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
-    query = order_crud.get_orders(db=db, id=id, order_date=order_date, company_id=company_id, department_id=department_id)
+    query = order_crud.get_orders(db=db, id=id, order_date=order_date, company_id=company_id, department_id=department_id, from_date=from_date, to_date=to_date)
     return paginate(query)
 
 

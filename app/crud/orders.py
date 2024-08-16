@@ -23,16 +23,21 @@ def create_order(db:Session,form_data:order_sch.OrderCreate):
     return query
 
 
-def get_orders(db:Session,id:Optional[int]=None,order_date:Optional[date]=None,company_id:Optional[int]=None,department_id:Optional[int]=None):
+def get_orders(db:Session,id:Optional[int]=None,order_date:Optional[date]=None,company_id:Optional[int]=None,department_id:Optional[int]=None,from_date:Optional[date]=None,to_date:Optional[date]=None):
     query = db.query(Orders)
     if id is not None:
         query = query.filter(Orders.id == id)
     if order_date is not None:
+        order_date -= timedelta(days=1)
         query = query.filter(Orders.created_at == order_date)
     if company_id is not None:
         query = query.filter(Departments.company_id == company_id)
     if department_id is not None:
         query = query.filter(Orders.department_id == department_id)
+    if from_date is not None:
+        query = query.filter(Orders.created_at >= from_date)
+    if to_date is not None:
+        query = query.filter(Orders.created_at <= to_date)
 
     return query.all()
 
