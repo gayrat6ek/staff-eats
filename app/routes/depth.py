@@ -183,6 +183,47 @@ def generate_orders_excell_list(orders, file_path):
 
 
 
+def generate_excell_list_of_orders(order_list,groups,file_path):
+    # Create a new workbook and select the active worksheet
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Orders"
+    total_group_meals = {}
+    for i in groups:
+        total_group_meals[i.name] = 0
+
+    # Write the headers
+    headers = ["Номер заявки", "Филиал","Организация","Время поступления","Порция"]
+
+
+    ws.append(headers)
+
+
+    # Write the data
+
+    for order in order_list:
+        text_toadd = ''
+        row = [order.id,order.client.department.name,order.client.department.company.name,order.created_at.strftime("%Y-%m-%d")]
+        for i in order.orderitem:
+            text_toadd+=f"{i.amount} порция(и) {i.group.name}\n"
+            total_group_meals[i.group.name]+=i.amount
+
+        row.append(text_toadd)
+        ws.append(row)
+    ws.append([])
+
+    # Write the total group meals
+    ws.append(["Итого по группам:"])
+    for group_name, total_amount in total_group_meals.items():
+        ws.append([group_name, total_amount])
+
+    # Save the workbook to the specified file path
+    wb.save(file_path)
+    return file_path
+
+
+
+
 
 
 

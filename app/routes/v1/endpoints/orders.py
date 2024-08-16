@@ -16,11 +16,12 @@ from fastapi import (
     Request,
     status,
 )
-from app.routes.depth import get_db, get_current_user
+from app.routes.depth import get_db, get_current_user,generate_excell_list_of_orders
 from app.schemas import orders as order_sch
 from app.schemas import users as user_sch
 from app.crud import orders as order_crud
 from app.crud import orderitems as orderitem_crud
+from app.crud import groups as group_crud
 
 order_router = APIRouter()
 
@@ -53,12 +54,28 @@ async def read_order(
 @order_router.post("/orders", response_model=order_sch.OrdersGet)
 async def create_order(
     form_data: order_sch.OrderCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: user_sch.UserGet = Depends(get_current_user),
+
 ):
     query = order_crud.create_order(db=db, form_data=form_data)
     for i in form_data.orderitems:
         orderitem_crud.create_orderitems(db=db,order_id=query.id,group_id=i['group_id'],amount=i['amount'])
     return query
+
+
+@order_router.get('/orders/list/excell', status_code=status.HTTP_200_OK,tags=['excell'])
+async def get_orders_excell(
+    from_date: Optional[date] = None,
+    to_date: Optional[date] = None,
+    db: Session = Depends(get_db),
+    current_user: user_sch.UserGet = Depends(get_current_user),
+):
+    query = order_crud.get_orders(db=db,from_date=from_date,to_date=to_date)
+    groups = group_crud.get_groups(db=db)
+    file_name = generate_excell_list_of_orders(order_list=query,file_path='files/orders.xlsx',groups=groups)
+    return {'file_name':file_name}
+
 
 
 
