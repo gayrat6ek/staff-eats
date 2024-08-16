@@ -8,5 +8,4 @@ passlib[bcrypt]
 pytz
 psycopg2-binary
 fastapi-pagination
-pandas
 openpyxl

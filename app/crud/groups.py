@@ -27,11 +27,11 @@ def create_group(db:Session,form_data:GroupsCreate):
 def update_group(db:Session,form_data:GroupsUpdate):
     query = db.query(Groups).filter(Groups.id == form_data.id).first()
     if query:
-        if form_data.name:
+        if form_data.name is not None:
             query.name = form_data.name
-        if form_data.description:
+        if form_data.description is not None:
             query.description = form_data.description
-        if form_data.is_active:
+        if form_data.is_active is not None:
             query.is_active = form_data.is_active
 
     db.commit()

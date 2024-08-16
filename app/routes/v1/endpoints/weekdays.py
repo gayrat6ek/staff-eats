@@ -87,8 +87,8 @@ async def get_weekdays_menus(
     db: Session = Depends(get_db),
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
-    weekdays = weekday_crud.get_menus(db=db,id=id)
-    return paginate(weekdays)
+    weekdays_get = weekday_crud.get_menus(db=db,id=id)
+    return paginate(weekdays_get)
 
 
 @weekday_router.get('/menus/{id}',tags=['Menus'], response_model=weekday_sch.WeekdaysMenu)
@@ -97,7 +97,7 @@ async def get_one_menu(
     db: Session = Depends(get_db),
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
-    return weekday_crud.get_menus(db=db, id=id)
+    return weekday_crud.get_one_weekday(db=db, id=id)
 
 
 @weekday_router.get(

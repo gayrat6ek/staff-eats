@@ -27,11 +27,11 @@ def create_weekday(db:Session,form_data:WeekdaysCreate):
 def update_weekday(db:Session,form_data:WeekdaysUpdate):
     query = db.query(Weekdays).filter(Weekdays.id == form_data.id).first()
     if query:
-        if form_data.name:
+        if form_data.name is not None:
             query.name = form_data.name
-        if form_data.description:
+        if form_data.description is not None:
             query.description = form_data.description
-        if form_data.is_active:
+        if form_data.is_active is not None:
             query.is_active = form_data.is_active
 
     db.commit()
@@ -50,7 +50,9 @@ def get_menus(db:Session,id:int):
     query = db.query(Weekdays)
     if id is not None:
         query = query.filter(Weekdays.id == id)
-    return query.first()
+    return query.all()
+
+
 
 
 def get_one_weekday(db:Session,id:int):

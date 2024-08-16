@@ -161,6 +161,28 @@ def generate_excell_list_of_ratings(ratings, file_path):
 
 
 
+def generate_orders_excell_list(orders, file_path):
+    # Create a new workbook and select the active worksheet
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Orders"
+
+    # Write the headers
+    headers = ["Branch","Company", "Client","Meal","Amount", "Date"]
+    ws.append(headers)
+
+    # Write the data
+
+    for order in orders:
+        row = [order.client.department.name,order.client.department.company.name, order.client.name,order.meal.name,order.amount, order.created_at.strftime("%Y-%m-%d")]
+        ws.append(row)
+
+    # Save the workbook to the specified file path
+    wb.save(file_path)
+    return file_path
+
+
+
 
 
 

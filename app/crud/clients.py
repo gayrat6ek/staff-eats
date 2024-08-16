@@ -40,15 +40,15 @@ def create_client(db:Session,form_data:ClientsCreate):
 def update_client(db:Session,form_data:ClientsUpdate):
     query = db.query(Clients).filter(Clients.id == form_data.id).first()
     if query:
-        if form_data.name:
+        if form_data.name is not None:
             query.name = form_data.name
-        if form_data.username:
+        if form_data.username is not None:
             query.username = form_data.username
-        if form_data.is_active:
+        if form_data.is_active is not None:
             query.is_active = form_data.is_active
-        if form_data.telegram_id:
+        if form_data.telegram_id is not None:
             query.telegram_id = form_data.telegram_id
-        if form_data.department_id:
+        if form_data.department_id is not None:
             query.department_id = form_data.department_id
     db.commit()
     return query

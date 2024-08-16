@@ -33,3 +33,4 @@ class Orders(Base):
     department = relationship("Departments", back_populates="order")
     created_at = Column(DateTime(timezone=True), default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+

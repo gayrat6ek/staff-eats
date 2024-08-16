@@ -27,13 +27,13 @@ def create_meals(db:Session,form_data:CreateMeals):
 def update_meals(db:Session,form_data:UpdateMeals):
     query = db.query(Meals).filter(Meals.id == form_data.id).first()
     if query:
-        if form_data.name:
+        if form_data.name is not None:
             query.name = form_data.name
-        if form_data.description:
+        if form_data.description is not None:
             query.description = form_data.description
-        if form_data.is_active:
+        if form_data.is_active is not None:
             query.is_active = form_data.is_active
-        if form_data.group_id:
+        if form_data.group_id is not None:
             query.group_id = form_data.group_id
     db.commit()
     return query

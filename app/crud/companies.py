@@ -34,11 +34,11 @@ def create_company(db:Session,form_data:CompaniesCreate):
 def update_company(db:Session,form_data:CompaniesUpdate):
     query = db.query(Companies).filter(Companies.id == form_data.id).first()
     if query:
-        if form_data.name:
+        if form_data.name is not None:
             query.name = form_data.name
-        if form_data.description:
+        if form_data.description is not None:
             query.description = form_data.description
-        if form_data.is_active:
+        if form_data.is_active is not None:
             query.is_active = form_data.is_active
     db.commit()
     db.refresh(query)

@@ -5,13 +5,13 @@ from datetime import datetime, time
 from fastapi import Form
 from uuid import UUID
 from .orderitems import OrderItemsGet
-from .departments import DepartmentsGet
+from .departments import DepartmentsGetAll
 
 class OrdersGet(BaseModel):
     id: int
     client_id: int
     orderitem: Optional[list[OrderItemsGet]] = None
-    department: Optional[DepartmentsGet] = None
+    department: Optional[DepartmentsGetAll] = None
     class Config:
         orm_mode = True
 
