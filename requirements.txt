@@ -9,3 +9,5 @@ pytz
 psycopg2-binary
 fastapi-pagination
 openpyxl
+requests
+apscheduler

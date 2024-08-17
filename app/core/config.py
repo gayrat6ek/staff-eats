@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     jwt_refresh_secret_key: str = os.getenv("JWT_REFRESH_SECRET_KEY")
     jwt_algorithm: str = os.getenv("JWT_ALGORITHM")
     admin_token_password: str = os.getenv("ADMIN_TOKEN_PASSWORD")
+    bottoken :str = os.getenv("BOTTOKEN")
+    frontbaseurl :str = os.getenv("FRONTBASEURL")
+    backend_token :str = os.getenv("BACKEND_TOKEN")
 
 
     # Database settings

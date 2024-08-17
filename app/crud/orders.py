@@ -23,7 +23,8 @@ def create_order(db:Session,form_data:order_sch.OrderCreate):
     return query
 
 
-def get_orders(db:Session,id:Optional[int]=None,order_date:Optional[date]=None,company_id:Optional[int]=None,department_id:Optional[int]=None,from_date:Optional[date]=None,to_date:Optional[date]=None):
+def get_orders(db:Session,id:Optional[int]=None,order_date:Optional[date]=None,company_id:Optional[int]=None,department_id:Optional[int]=None,from_date:Optional[date]=None,to_date:Optional[date]=None
+               ,department_name:Optional[str]=None):
     query = db.query(Orders)
     if id is not None:
         query = query.filter(Orders.id == id)
@@ -38,6 +39,8 @@ def get_orders(db:Session,id:Optional[int]=None,order_date:Optional[date]=None,c
         query = query.filter(Orders.created_at >= from_date)
     if to_date is not None:
         query = query.filter(Orders.created_at <= to_date)
+    if department_name is not None:
+        query = query.filter(Departments.name == department_name)
 
     return query.all()
 

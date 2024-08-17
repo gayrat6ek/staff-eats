@@ -12,16 +12,21 @@ from app.models.files import  Files
 
 
 
-def create_file(db:Session,weekday_id:Optional[int]=None,user_id:Optional[int]=None,url:Optional[str]=None):
-    query = Files(weekday_id=weekday_id,user_id=user_id,url=url)
-    db.add(query)
-    db.commit()
-    db.refresh(query)
-    return query
+
 
 
 
 def delete_file(db:Session,form_data:FilesDelete):
     query = db.query(Files).filter(Files.id==form_data.id).delete()
     db.commit()
+    return query
+
+def create_file(db:Session,weekday_id:Optional[int]=None,user_id:Optional[int]=None,url:Optional[str]=None):
+    delete_weekday = db.query(Files).filter(Files.weekday_id==weekday_id).delete()
+    db.commit()
+
+    query = Files(weekday_id=weekday_id,user_id=user_id,url=url)
+    db.add(query)
+    db.commit()
+    db.refresh(query)
     return query

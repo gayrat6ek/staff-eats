@@ -1,3 +1,5 @@
+import time
+
 from fastapi import APIRouter
 from fastapi_pagination import paginate, Page
 from typing import Optional
@@ -22,7 +24,57 @@ from app.schemas import clients as client_sch
 from app.crud import clients as client_crud
 
 
+from datetime import datetime,timedelta
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
+import pytz
+from app.utils.utils import inlinewebapp
+from app.core.config import settings
+from app.crud.weekdays import get_weekday_by_name
+
+
+
+
 client_router = APIRouter()
+
+
+weekdaysids = {
+ 0:"Понедельник",
+    1:"Вторник",
+    2:"Среда",
+    3:"Четверг",
+    4:"Пятница",
+    5:"Суббота",
+    6:"Воскресенье"
+}
+
+def job(db:Session):
+    todays = datetime.now(tz=pytz.timezone('Asia/Tashkent')).date()
+    todays_weekday = todays.weekday()
+    name = weekdaysids[todays_weekday]
+    weekdays = get_weekday_by_name(db=db,name=name)
+    text_to_send = "Уважаемый менеджер ресторана, пожалуйста нажмите на кнопку Оставить отзыв🌟и оцените сегодняшнее блюдо по шкале от 1 до 5"
+    clients = client_crud.get_clients(db=db)
+
+    if weekdays is not None and weekdays.is_active==1 and weekdays.menu:
+        for menu in weekdays.menu:
+            if menu.group_id == 1:
+                limit = 0
+
+                for client in clients:
+                    url = f"{settings.frontbaseurl}?token={settings.backend_token}&client_id={client.id}&meal_id={menu.meal_id}"
+
+
+                    limit += 1
+                    inlinewebapp(bot_token=settings.bottoken,chat_id= client.telegram_id, message_text=text_to_send,url=url)
+                    if limit == 30:
+                        time.sleep(2)
+                        limit = 0
+
+
+
+
+
 
 
 @client_router.get(

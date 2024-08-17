@@ -59,3 +59,8 @@ def get_one_weekday(db:Session,id:int):
     query = db.query(Weekdays).filter(Weekdays.id==id).first()
     return query
 
+
+def get_weekday_by_name(db:Session,name:str):
+    query = db.query(Weekdays).filter(Weekdays.name.ilike(f"%{name}%")).first()
+    return query
+
