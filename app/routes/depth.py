@@ -55,32 +55,34 @@ def get_db():
 async def get_current_user(
     token: str = Depends(reuseable_oauth), db: Session = Depends(get_db)
 ) -> UserGet:
-    try:
-        payload = jwt.decode(token, settings.jwt_secret_key, algorithms=[settings.jwt_algorithm])
-        expire_date = payload.get("exp")
-        sub = payload.get("sub")
-        password = payload.get("password")
+    if token == settings.backend_token:
+        user: Union[dict[str, Any], None] = get_user_byusername(db, 'admin')
+        return user
 
-        if sub == "admin":
-            if password != settings.admin_token_password:
-                raise HTTPException(
-                    status_code=status.HTTP_403_FORBIDDEN,
-                    detail="Not enough permissions",
-                    headers={"WWW-Authenticate": "Bearer"},
-                )
-        elif datetime.fromtimestamp(expire_date) < datetime.now():
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Token expired",
-                headers={"WWW-Authenticate": "Bearer"},
-            )
 
-    except (jwt.JWTError, ValidationError):
+
+
+    payload = jwt.decode(token, settings.jwt_secret_key, algorithms=[settings.jwt_algorithm])
+    expire_date = payload.get("exp")
+    sub = payload.get("sub")
+    password = payload.get("password")
+
+
+    if datetime.fromtimestamp(expire_date) < datetime.now():
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Could not validate credentials",
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token expired",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
+    # except (jwt.JWTError, ValidationError):
+    #     raise HTTPException(
+    #         status_code=status.HTTP_403_FORBIDDEN,
+    #         detail="Could not validate credentials",
+    #         headers={"WWW-Authenticate": "Bearer"},
+    #     )
+
+
     user: Union[dict[str, Any], None] = get_user_byusername(db, sub)
 
     if user is None:
