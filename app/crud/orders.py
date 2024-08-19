@@ -30,7 +30,7 @@ def get_orders(db:Session,id:Optional[int]=None,order_date:Optional[date]=None,c
         query = query.filter(Orders.id == id)
     if order_date is not None:
         order_date -= timedelta(days=1)
-        query = query.filter(Orders.created_at == order_date)
+        query = query.filter(func.date(Orders.created_at) == order_date)
     if company_id is not None:
         query = query.filter(Departments.company_id == company_id)
     if department_id is not None:
