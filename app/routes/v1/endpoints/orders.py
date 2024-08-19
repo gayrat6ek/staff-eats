@@ -34,11 +34,11 @@ async def read_orders(
     to_date: Optional[date] = None,
     department_name: Optional[str] = None,
     id: Optional[int] = None,
-    order_date: Optional[date] = None,
+    created_at: Optional[date] = None,
     db: Session = Depends(get_db),
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
-    query = order_crud.get_orders(db=db, id=id, order_date=order_date, company_id=company_id, department_id=department_id, from_date=from_date, to_date=to_date, department_name=department_name)
+    query = order_crud.get_orders(db=db, id=id, order_date=created_at, company_id=company_id, department_id=department_id, from_date=from_date, to_date=to_date, department_name=department_name)
     return paginate(query)
 
 
