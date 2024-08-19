@@ -91,6 +91,7 @@ async def get_clients(
     return paginate(clients)
 
 
+
 @client_router.post(
     "/clients",
     response_model=client_sch.ClientsGet,
@@ -113,6 +114,15 @@ async def update_client(
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
     return client_crud.update_client(db=db, form_data=form_data)
+
+
+@client_router.put('/clients/logout',)
+async def logout(
+    form_data: client_sch.Logout,
+    db: Session = Depends(get_db),
+    current_user: user_sch.UserGet = Depends(get_current_user),
+):
+    return client_crud.logout(db=db, current_user=form_data.telegram_id)
 
 
 

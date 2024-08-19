@@ -39,3 +39,9 @@ class ClientsUpdate(BaseModel):
     id:int
     class Config:
         orm_mode = True
+
+
+class Logout(BaseModel):
+    telegram_id:str
+    class Config:
+        orm_mode = True

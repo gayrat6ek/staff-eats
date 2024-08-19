@@ -54,3 +54,11 @@ def update_client(db:Session,form_data:ClientsUpdate):
     return query
 
 
+
+
+def logout(db:Session,current_user):
+    query = db.query(Clients).filter(Clients.telegram_id == current_user).first()
+    if query:
+        query.department_id = None
+    db.commit()
+    return query
