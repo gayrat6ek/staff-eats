@@ -16,7 +16,8 @@ def create_ratings(db:Session,form_data:RatingsCreate):
     query = Ratings(
         rating=form_data.rating,
         meal_id=form_data.meal_id,
-        client_id=form_data.client_id
+        client_id=form_data.client_id,
+        comment=form_data.comment
     )
     db.add(query)
     db.commit()

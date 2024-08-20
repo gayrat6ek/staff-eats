@@ -32,6 +32,8 @@ from app.utils.utils import inlinewebapp
 from app.core.config import settings
 from app.crud.weekdays import get_weekday_by_name
 
+timezonetash = pytz.timezone('Asia/Tashkent')
+
 
 
 
@@ -63,14 +65,21 @@ def job(db:Session):
 
                 for client in clients:
                     url = f"{settings.frontbaseurl}?token={settings.backend_token}&client_id={client.id}&meal_id={menu.meal_id}"
-
-
                     limit += 1
                     inlinewebapp(bot_token=settings.bottoken,chat_id= client.telegram_id, message_text=text_to_send,url=url)
                     if limit == 30:
                         time.sleep(2)
                         limit = 0
 
+
+
+
+@client_router.on_event("startup")
+def startup_event():
+    scheduler = BackgroundScheduler()
+    trigger  = CronTrigger(hour=23, minute=10, second=00,timezone=timezonetash)  # Set the desired time for the function to run (here, 12:00 PM)
+    scheduler.add_job(job, trigger=trigger, args=[next(get_db())])
+    scheduler.start()
 
 
 
