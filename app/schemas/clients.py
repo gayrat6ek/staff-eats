@@ -21,8 +21,8 @@ class ClientsGet(BaseModel):
 
 
 class ClientsCreate(BaseModel):
-    name:str
-    username:str
+    name:Optional[str] = None
+    username:Optional[str] = None
     telegram_id:str
     is_active:Optional[int] = None
     department_id:int
