@@ -10,6 +10,7 @@ class CreateMeals(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     is_active: Optional[int] = None
+    price: Optional[float] = None
     group_id: int
 
     class Config:
@@ -21,6 +22,7 @@ class UpdateMeals(BaseModel):
     description: Optional[str] = None
     is_active: Optional[int] = None
     group_id: Optional[int] = None
+    price: Optional[float] = None
     id: int
 
     class Config:
@@ -33,5 +35,6 @@ class GetMeals(BaseModel):
     description: Optional[str] = None
     is_active: Optional[int] = None
     group_id: Optional[int] = None
+    price: Optional[float] = None
     class Config:
         orm_mode = True

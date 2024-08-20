@@ -16,7 +16,8 @@ def create_meals(db:Session,form_data:CreateMeals):
     query = Meals(name=form_data.name,
                     description=form_data.description,
                     is_active=form_data.is_active,
-                  group_id=form_data.group_id
+                  group_id=form_data.group_id,
+                    price=form_data.price
                    )
     db.add(query)
     db.commit()
@@ -35,6 +36,8 @@ def update_meals(db:Session,form_data:UpdateMeals):
             query.is_active = form_data.is_active
         if form_data.group_id is not None:
             query.group_id = form_data.group_id
+        if form_data.price is not None:
+            query.price = form_data.price
     db.commit()
     return query
 

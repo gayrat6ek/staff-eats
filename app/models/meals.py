@@ -4,6 +4,7 @@ from sqlalchemy import (
     String,
     ForeignKey,
     DateTime,
+Float
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -18,6 +19,7 @@ class Meals(Base):
     description = Column(String, nullable=True)
     group_id = Column(Integer, ForeignKey("groups.id"))
     group = relationship("Groups", back_populates="meal")
+    price = Column(Float, nullable=True)
     is_active = Column(Integer, default=1)
     rating = relationship("Ratings", back_populates="meal")
     menu = relationship("Menus", back_populates="meal")
