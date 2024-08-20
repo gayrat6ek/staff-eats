@@ -77,7 +77,7 @@ def job(db:Session):
 @client_router.on_event("startup")
 def startup_event():
     scheduler = BackgroundScheduler()
-    trigger  = CronTrigger(hour=23, minute=17, second=00,timezone=timezonetash)  # Set the desired time for the function to run (here, 12:00 PM)
+    trigger  = CronTrigger(hour=00, minute=12, second=00,timezone=timezonetash)  # Set the desired time for the function to run (here, 12:00 PM)
     scheduler.add_job(job, trigger=trigger, args=[next(get_db())])
     scheduler.start()
 
