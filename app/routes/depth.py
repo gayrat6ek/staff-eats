@@ -164,7 +164,7 @@ def generate_excell_list_of_ratings(ratings, file_path):
 
         row = [rating.comment,rating.meal.name,rating.rating, rating.created_at.strftime("%Y-%m-%d")]
 
-        row_data.extend(row)
+        row = row_data+row
         ws.append(row)
 
     # Save the workbook to the specified file path

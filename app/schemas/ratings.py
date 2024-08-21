@@ -24,6 +24,7 @@ class RatingsGet(BaseModel):
     meal: Optional[GetMeals] = None
     client_id: int
     client: Optional[ClientsGet] = None
+    created_at: Optional[datetime] = None
     class Config:
         orm_mode = True
 
