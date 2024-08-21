@@ -28,7 +28,7 @@ from datetime import datetime,timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 import pytz
-from app.utils.utils import inlinewebapp
+from app.utils.utils import inlinewebapp,send_message_telegram
 from app.core.config import settings
 from app.crud.weekdays import get_weekday_by_name
 
@@ -72,13 +72,31 @@ def job(db:Session):
                         limit = 0
 
 
+def clients_without_order(db:Session):
+    client_list = client_crud.get_clients_without_orders_today(db=db)
+    for i in client_list:
+        text_to_send = f"Вы сегодня не отправили заявку на питание. \n\nНеобходимо отправить заявку до 17:00❗️"
+        send_message_telegram(bot_token=settings.bottoken,chat_id=i.telegram_id,message_text=text_to_send)
+    return True
+
+
+
 
 
 @client_router.on_event("startup")
 def startup_event():
     scheduler = BackgroundScheduler()
-    trigger  = CronTrigger(hour=18, minute=18, second=00,timezone=timezonetash)  # Set the desired time for the function to run (here, 12:00 PM)
+    trigger  = CronTrigger(hour=14, minute=00, second=00,timezone=timezonetash)  # Set the desired time for the function to run (here, 12:00 PM)
     scheduler.add_job(job, trigger=trigger, args=[next(get_db())])
+    scheduler.start()
+
+
+
+@client_router.on_event("startup")
+def startup_clients_without_order():
+    scheduler = BackgroundScheduler()
+    trigger  = CronTrigger(hour=16, minute=00, second=00,timezone=timezonetash)  # Set the desired time for the function to run (here, 12:00 PM)
+    scheduler.add_job(clients_without_order, trigger=trigger, args=[next(get_db())])
     scheduler.start()
 
 

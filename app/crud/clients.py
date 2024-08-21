@@ -10,6 +10,11 @@ from uuid import UUID
 
 from app.schemas.clients import ClientsGet,ClientsCreate,ClientsUpdate
 from app.models.clients import  Clients
+from app.models.orders import Orders
+from datetime import date
+
+
+timezonetash = pytz.timezone('Asia/Tashkent')
 
 
 def get_clients(db:Session,id:Optional[int]=None,telegram_id:Optional[str]=None):
@@ -62,3 +67,22 @@ def logout(db:Session,current_user):
         query.department_id = None
     db.commit()
     return query
+
+
+def get_clients_without_orders_today(db: Session):
+    # Get the current date
+    today = datetime.now(tz=timezonetash).date()
+
+    # Subquery to get client IDs who have placed orders today
+    subquery = db.query(Orders.client_id).filter(
+        cast(Orders.created_at, Date) == today
+    ).distinct()
+
+    # Query to get all active clients who have not placed an order today
+    clients_without_orders_today = db.query(Clients).filter(
+        Clients.is_active == 1,
+        Clients.id.notin_(subquery)
+    ).all()
+
+    return clients_without_orders_today
+

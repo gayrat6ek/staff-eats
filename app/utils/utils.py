@@ -89,6 +89,13 @@ def send_photo_telegram(bot_token, chat_id, file_path, caption=None):
             response = requests.post(url, data=data, files=files)
         return response.json()
 
+
+def send_message_telegram(bot_token, chat_id, message_text):
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    data = {"chat_id": chat_id, "text": message_text}
+    response = requests.post(url, data=data)
+    return response.json()
+
 def inlinewebapp(bot_token, chat_id, message_text, url):
         keyboard = {
             "inline_keyboard": [
