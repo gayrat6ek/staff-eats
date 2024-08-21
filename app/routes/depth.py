@@ -154,7 +154,17 @@ def generate_excell_list_of_ratings(ratings, file_path):
     # Write the data
 
     for rating in ratings:
-        row = [rating.client.department.name,rating.client.department.company.name, rating.comment,rating.meal.name,rating.rating, rating.created_at.strftime("%Y-%m-%d")]
+        row_data = []
+        if rating.client.department:
+            row_data.append(rating.client.department.name)
+            row_data.append(rating.client.department.company.name)
+        else:
+            row_data.append(' ')
+            row_data.append(' ')
+
+        row = [rating.comment,rating.meal.name,rating.rating, rating.created_at.strftime("%Y-%m-%d")]
+
+        row_data.extend(row)
         ws.append(row)
 
     # Save the workbook to the specified file path
