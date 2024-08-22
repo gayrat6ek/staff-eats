@@ -24,7 +24,7 @@ def create_order(db:Session,form_data:order_sch.OrderCreate):
 
 
 def get_orders(db:Session,id:Optional[int]=None,order_date:Optional[date]=None,company_id:Optional[int]=None,department_id:Optional[int]=None,from_date:Optional[date]=None,to_date:Optional[date]=None
-               ,department_name:Optional[str]=None):
+               ,department_name:Optional[str]=None,):
     query = db.query(Orders)
     if id is not None:
         query = query.filter(Orders.id == id)

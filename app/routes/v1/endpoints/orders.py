@@ -2,9 +2,10 @@ from fastapi import APIRouter
 from fastapi_pagination import paginate, Page
 from typing import Optional
 from uuid import UUID
-from datetime import datetime, date
+from datetime import datetime, date,timedelta
 from typing import Annotated
 from sqlalchemy.orm import Session
+
 from fastapi import (
     Depends,
     FastAPI,
@@ -73,6 +74,8 @@ async def get_orders_excell(
     db: Session = Depends(get_db),
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
+    if from_date is None and to_date is None:
+       order_date = date.today()+timedelta(days=1)
     query = order_crud.get_orders(db=db,from_date=from_date,to_date=to_date,order_date=order_date)
     groups = group_crud.get_groups(db=db)
     file_name = generate_excell_list_of_orders(order_list=query,file_path='files/orders.xlsx',groups=groups)
