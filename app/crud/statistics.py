@@ -52,6 +52,7 @@ def total_order_items_amount_today_grouped_by_company(db: Session):
         .join(Departments, Orders.department_id == Departments.id)
         .join(Companies, Departments.company_id == Companies.id)
         .filter(cast(Orderitems.created_at, Date) == tomorrow.date())
+        .filter(Orderitems.group_id==1)
         .group_by(Companies.name)
         .all()
     )
