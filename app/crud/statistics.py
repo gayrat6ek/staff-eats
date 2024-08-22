@@ -42,7 +42,7 @@ def overall_top_5_meals_and_ranking(db: Session):
 
 
 def total_order_items_amount_today_grouped_by_company(db: Session):
-    tomorrow = datetime.now(timezone_tash) + timedelta(days=1)
+    tomorrow = datetime.now(timezone_tash)
     results = (
         db.query(
             Companies.name.label('company_name'),
