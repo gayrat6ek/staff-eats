@@ -74,7 +74,7 @@ async def get_orders_excell(
     db: Session = Depends(get_db),
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
-    if from_date is None and to_date is None:
+    if from_date is None and to_date is None and order_date is None:
        order_date = date.today()+timedelta(days=1)
     query = order_crud.get_orders(db=db,from_date=from_date,to_date=to_date,order_date=order_date)
     groups = group_crud.get_groups(db=db)
