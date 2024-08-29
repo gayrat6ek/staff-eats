@@ -87,7 +87,7 @@ def job(db:Session):
 @weekday_router.on_event("startup")
 def startup_event():
     scheduler = BackgroundScheduler()
-    trigger  = CronTrigger(hour=11, minute=00, second=00,timezone=timezonetash)  # Set the desired time for the function to run (here, 12:00 PM)
+    trigger  = CronTrigger(hour=7, minute=00, second=00,timezone=timezonetash)  # Set the desired time for the function to run (here, 12:00 PM)
     scheduler.add_job(job, trigger=trigger, args=[next(get_db())])
     scheduler.start()
 
