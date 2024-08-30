@@ -29,7 +29,7 @@ order_router = APIRouter()
 
 @order_router.get("/orders", response_model=Page[order_sch.OrdersGet])
 async def read_orders(
-    company_id: Optional[int] = None,
+    company: Optional[int] = None,
     department_id: Optional[int] = None,
     from_date: Optional[date] = None,
     to_date: Optional[date] = None,
@@ -39,7 +39,7 @@ async def read_orders(
     db: Session = Depends(get_db),
     current_user: user_sch.UserGet = Depends(get_current_user),
 ):
-    query = order_crud.get_orders(db=db, id=id, order_date=created_at, company_id=company_id, department_id=department_id, from_date=from_date, to_date=to_date, department_name=department_name)
+    query = order_crud.get_orders(db=db, id=id, order_date=created_at, company_id=company, department_id=department_id, from_date=from_date, to_date=to_date, department_name=department_name)
     return paginate(query)
 
 

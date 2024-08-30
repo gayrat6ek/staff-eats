@@ -40,7 +40,7 @@ def get_orders(db:Session,id:Optional[int]=None,order_date:Optional[date]=None,c
     if to_date is not None:
         query = query.filter(Orders.created_at <= to_date)
     if department_name is not None:
-        query = query.filter(Departments.name == department_name)
+        query = query.filter(Departments.name.ilike(f'%{department_name}%'))
 
     return query.all()
 
