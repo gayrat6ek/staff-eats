@@ -34,5 +34,5 @@ def get_rankings(db:Session,from_date, to_date,id:Optional[int]=None):
         query = query.filter(Ratings.created_at >= from_date)
     if to_date is not None:
         query = query.filter(Ratings.created_at <= to_date)
-    return query.order_by(Ratings.id.asc()).all()
+    return query.order_by(Ratings.id.desc()).all()
 
